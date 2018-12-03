@@ -1,1 +1,2 @@
-# FSJS-project-2
+# FSJS Project 2
+***** List Pagination and Filtering *****
