@@ -1,5 +1,5 @@
 /******************************************
-ist Filter and Pagination
+List Filter and Pagination
 ******************************************/
    
 
@@ -8,11 +8,19 @@ ist Filter and Pagination
    Global variables... DOM selectors
 ***/
 const listItems = document.querySelectorAll('.student-list li');
-let pagination = document.createElement('div');
-pagination.className = 'pagination';
-document.querySelector('.page').appendChild(pagination);
-let ul = document.createElement('ul');
-document.querySelector('.pagination').appendChild(ul);
+
+
+function createPaginationDiv () {
+   let pagination = document.createElement('div');
+   pagination.className = 'pagination';
+   document.querySelector('.page').appendChild(pagination);
+   let ul = document.createElement('ul');
+   document.querySelector('.pagination').appendChild(ul);
+   ul.setAttribute('id', 'paginationUL')
+}
+
+
+
 
 
 let pageSize = 10;
@@ -35,7 +43,7 @@ function showPage(list, page = 1) {
    }
    return list;
 }
-showPage(listItems, startPage);
+
 
 
 
@@ -46,6 +54,7 @@ showPage(listItems, startPage);
 ***/
 
 function appendPageLinks(list) {
+   createPaginationDiv(); 
 
    for (let i = 1; i <= pageCount; i++) {
       let li = document.createElement('li');
@@ -64,7 +73,65 @@ function appendPageLinks(list) {
          e.target.className = 'active';
       });
    }
+}
+
+
+
+function removeLinks() {
+   var elem = document.querySelector('.pagination');
+   elem.parentNode.removeChild(elem);
+}
+
+   
+
+// Search HTML
+let searchInput = document.createElement('div');
+searchInput.setAttribute('class', 'student-search')
+document.querySelector('.page-header').appendChild(searchInput);
+let input = document.createElement('input');
+input.setAttribute('placeholder', 'Search for students...');
+input.setAttribute('type', 'text');
+document.querySelector('.student-search').appendChild(input);
+input.autocomplete = "on";
+let button = document.createElement('button');
+button.textContent = 'Search';
+document.querySelector('.student-search').appendChild(button);
+
+
+/*** 
+   The `searchOnList` function search and filter through the Listitems 
+   based on the text typed in the input field. 
+   the for loop, loops through all the items on the list and hide those who don't 
+   match the search query. 
+***/
+ 
+function searchOnList () {
+   let filter, txtValue;
+   filter = input.value.toLowerCase();
+   
+   for (let i = 0; i < listItems.length; i ++) {
+      list = listItems[i].querySelectorAll('.student-details')[0];
+      txtValue = list.textContent || list.innerText;
+      if (txtValue.toLowerCase().indexOf(filter) > -1) {
+         console.log(listItems[i].style.display = "");
+      } else {
+         listItems[i].style.display = "none";
+      }
+   }
+   //console.log(listItems);
    
 }
 
+// real time filtering and calls the `searchOnList` function
+input.addEventListener('keyup', () => {
+   
+   searchOnList(listItems);
+});
+
+
+button.addEventListener('click', () => {
+   searchOnList();
+});
+
+showPage(listItems, startPage);
 appendPageLinks(listItems);
