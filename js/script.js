@@ -24,7 +24,7 @@ function createPaginationDiv () {
 
 
 let pageSize = 10;
-let pageCount = Math.ceil(listItems.length / pageSize);
+
 let startPage = 1;
 
 
@@ -55,6 +55,7 @@ showPage(listItems, startPage);
 
 function appendPageLinks(list) {
    createPaginationDiv(); 
+   let pageCount = Math.ceil(list.length / pageSize);
 
    for (let i = 1; i <= pageCount; i++) {
       let li = document.createElement('li');
@@ -65,7 +66,7 @@ function appendPageLinks(list) {
       a.innerHTML = i;
       a.addEventListener('click', (e) => {
          const currentLink = e.target.textContent;
-         showPage(listItems, currentLink);
+         showPage(list, currentLink);
          links = document.querySelectorAll('.active');
          for (let i = 0; i < links.length; i++) {
             links[i].classList.remove('active');
@@ -120,10 +121,9 @@ function searchOnList () {
       }
    }
 
-   console.log(studentArr);
+   removeLinks();
    showPage(studentArr, startPage);   
    appendPageLinks(studentArr);
-   studentArr = [];
 }
 
 // real time filtering and calls the `searchOnList` function
