@@ -114,21 +114,21 @@ function searchOnList () {
       txtValue = list.textContent || list.innerText;
       if (txtValue.toLowerCase().indexOf(filter) > -1) {
          listItems[i].style.display = "";
-         appendPageLinks(studentArr);
-         showPage(studentArr, 1);
+         studentArr.push(listItems[i]);
       } else {
          listItems[i].style.display = "none";
-         appendPageLinks(studentArr);
-         showPage(studentArr, 1);
       }
    }
-   
+
+   console.log(studentArr);
+   showPage(studentArr, 1);   
+   appendPageLinks(studentArr);
 }
 
 // real time filtering and calls the `searchOnList` function
 input.addEventListener('keyup', () => {
-   
    searchOnList();
+   
 });
 
 
