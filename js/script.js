@@ -43,7 +43,7 @@ function showPage(list, page = 1) {
    }
    return list;
 }
-
+showPage(listItems, startPage);
 
 
 
@@ -74,7 +74,7 @@ function appendPageLinks(list) {
       });
    }
 }
-
+appendPageLinks(listItems);
 
 
 function removeLinks() {
@@ -108,24 +108,27 @@ document.querySelector('.student-search').appendChild(button);
 function searchOnList () {
    let filter, txtValue;
    filter = input.value.toLowerCase();
-   
-   for (let i = 0; i < listItems.length; i ++) {
-      list = listItems[i].querySelectorAll('.student-details')[0];
+   studentArr = [];
+   for (let i = 0; i < listItems.length; i ++) { 
+      list = listItems[i].querySelectorAll('.student-details h3')[0];
       txtValue = list.textContent || list.innerText;
       if (txtValue.toLowerCase().indexOf(filter) > -1) {
-         console.log(listItems[i].style.display = "");
+         listItems[i].style.display = "";
+         appendPageLinks(studentArr);
+         showPage(studentArr, 1);
       } else {
          listItems[i].style.display = "none";
+         appendPageLinks(studentArr);
+         showPage(studentArr, 1);
       }
    }
-   //console.log(listItems);
    
 }
 
 // real time filtering and calls the `searchOnList` function
 input.addEventListener('keyup', () => {
    
-   searchOnList(listItems);
+   searchOnList();
 });
 
 
@@ -133,5 +136,4 @@ button.addEventListener('click', () => {
    searchOnList();
 });
 
-showPage(listItems, startPage);
-appendPageLinks(listItems);
+
