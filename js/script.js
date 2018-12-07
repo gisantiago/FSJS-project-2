@@ -121,8 +121,9 @@ function searchOnList () {
    }
 
    console.log(studentArr);
-   showPage(studentArr, 1);   
+   showPage(studentArr, startPage);   
    appendPageLinks(studentArr);
+   studentArr = [];
 }
 
 // real time filtering and calls the `searchOnList` function
