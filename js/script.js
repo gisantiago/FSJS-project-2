@@ -8,8 +8,13 @@ List Filter and Pagination
    Global variables... DOM selectors
 ***/
 const listItems = document.querySelectorAll('.student-list li');
+let pageSize = 10;
+let startPage = 1;
 
 
+/*** 
+   The `createPaginationDiv` function create the pagination div with its ul.
+***/
 function createPaginationDiv () {
    let pagination = document.createElement('div');
    pagination.className = 'pagination';
@@ -18,14 +23,6 @@ function createPaginationDiv () {
    document.querySelector('.pagination').appendChild(ul);
    ul.setAttribute('id', 'paginationUL')
 }
-
-
-
-
-
-let pageSize = 10;
-
-let startPage = 1;
 
 
 /*** 
@@ -98,6 +95,17 @@ let button = document.createElement('button');
 button.textContent = 'Search';
 document.querySelector('.student-search').appendChild(button);
 
+/*** 
+   The `noSearchMessage` 
+***/
+
+function noSearchMessage () {
+   let noSearch = document.createElement('p');
+   noSearch.setAttribute('class', 'noSearch');
+   document.querySelector('.page').appendChild(noSearch);
+   document.querySelector(".noSearch").innerHTML = 'No match found! Please try again.';
+}
+
 
 /*** 
    The `searchOnList` function search and filter through the Listitems 
@@ -119,6 +127,11 @@ function searchOnList () {
       } else {
          listItems[i].style.display = "none";
       }
+   }
+   
+   console.log(studentArr);
+   if (studentArr === []) {
+      noSearchMessage();
    }
 
    removeLinks();

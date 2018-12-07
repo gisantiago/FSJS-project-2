@@ -117,3 +117,14 @@ body{
       background-color: #4ba6c3;
       color: #fff;
     }
+
+.noSearch {
+  text-align: center;
+  color: red;
+  vertical-align: middle;
+  line-height: 30px;
+  border: #555 solid .5px;
+  border-radius: 10px;
+  margin-left: 300px;
+  margin-right: 300px;
+}
