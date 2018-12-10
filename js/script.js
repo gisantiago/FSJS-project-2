@@ -15,7 +15,7 @@ let startPage = 1;
 /*** 
    The `createPaginationDiv` function create the pagination div with its ul.
 ***/
-function createPaginationDiv () {
+const createPaginationDiv = () => {
    let pagination = document.createElement('div');
    pagination.className = 'pagination';
    document.querySelector('.page').appendChild(pagination);
@@ -30,7 +30,7 @@ function createPaginationDiv () {
    variable and hide all other item in the list. 
    On this case the default pageSize is set to (10).
 ***/
-function showPage(list, page = 1) {
+const showPage = (list, page) => {
    for (let i = 0; i < list.length; i++) {
       if (i >= (page * pageSize) - pageSize && i <= (((page * pageSize) - pageSize) + pageSize) - 1) {
          list[i].style.display = 'block';
@@ -50,7 +50,7 @@ showPage(listItems, startPage);
    this function also call the `showPage` function every time the link buttons are clicked.  
 ***/
 
-function appendPageLinks(list) {
+const appendPageLinks = list => {
    createPaginationDiv(); 
    let pageCount = Math.ceil(list.length / pageSize);
 
@@ -75,14 +75,17 @@ function appendPageLinks(list) {
 appendPageLinks(listItems);
 
 
-function removeLinks() {
+const removeLinks = () => {
    var elem = document.querySelector('.pagination');
    elem.parentNode.removeChild(elem);
 }
 
-   
+/******************************************************************************************************** */   
 
-// Search HTML
+/*** 
+   Search Input HTML Element... 
+***/
+
 let searchInput = document.createElement('div');
 searchInput.setAttribute('class', 'student-search')
 document.querySelector('.page-header').appendChild(searchInput);
@@ -95,15 +98,29 @@ let button = document.createElement('button');
 button.textContent = 'Search';
 document.querySelector('.student-search').appendChild(button);
 
+
+
+
 /*** 
-   The `noSearchMessage` 
+   The `noSearchMessage` function creates the <p> for the "No result" messsage.
+
+   I have creatred a css selector on the design.css to handle the desing of the the noSearch class.
 ***/
 
-function noSearchMessage () {
+const noResultMessage = () => {
    let noSearch = document.createElement('p');
    noSearch.setAttribute('class', 'noSearch');
    document.querySelector('.page').appendChild(noSearch);
-   document.querySelector(".noSearch").innerHTML = 'No match found! Please try again.';
+   document.querySelector('.noSearch').innerHTML = 'No match found! Please try again.';
+}
+
+/*** 
+   The `clearMessage` function clears the "No Result" message.
+***/
+
+const clearMessage = () => {
+   var elem = document.querySelector('.noSearch');
+   elem.parentNode.removeChild(elem);
 }
 
 
@@ -114,7 +131,7 @@ function noSearchMessage () {
    match the search query. 
 ***/
  
-function searchOnList () {
+const searchOnList = () => {
    let filter, txtValue;
    filter = input.value.toLowerCase();
    studentArr = [];
@@ -129,14 +146,27 @@ function searchOnList () {
       }
    }
    
+   /*** 
+      This nested If-Statement checks for how many students are listed on the newely created array `studentArr` 
+      based on the search results. if the studentArr is empty and there is no <p> is a class `.noSearch`, 
+      then the "noResultMessage" is called. 
+
+      else if the `studentArr` > 1 and there is a <p> with a class of `.noSearch`, then the `clearMessage` is called. 
+   ***/
+
    console.log(studentArr);
-   if (studentArr === []) {
-      noSearchMessage();
+   if (studentArr.length === 0 && document.querySelector('.noSearch') === null) {
+      noResultMessage();
+   } else {
+      if (document.querySelector('.noSearch') && studentArr.length !== 0) {
+         clearMessage();
+      }  
    }
 
    removeLinks();
    showPage(studentArr, startPage);   
    appendPageLinks(studentArr);
+   studentArr = [];
 }
 
 // real time filtering and calls the `searchOnList` function
