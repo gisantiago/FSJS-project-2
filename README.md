@@ -1,2 +1,2 @@
 List Pagination and Filtering
-https://gisantiago.github.io/FSJS-project-2/
+https://gisantiago.github.io/List-Pagination-and-Filtering/
